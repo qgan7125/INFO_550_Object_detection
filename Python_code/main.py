@@ -4,12 +4,14 @@
 import basic 
 import os
 import sys
+import torch
 
 # -------------------------------------------------------------------------------
 # Run object detection
 # -------------------------------------------------------------------------------
-def simple_model(img='https://ultralytics.com/images/zidane.jpg'):
-    model = basic.Simple_model()
+def simple_model():
+    yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+    model = basic.Obj_detect(yolo_model)
     model.detect_video(0)
 
 
@@ -50,7 +52,11 @@ def run_command(options):
     if options.simple_case:
         pass
     else:
-        simple_model()
+        print(options.file == False)
+        if not options.file:
+            simple_model(None)
+        else:
+            simple_model(options.file)
 
 if __name__ == '__main__':
     """

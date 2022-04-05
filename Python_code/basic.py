@@ -2,21 +2,23 @@
 # And class to do real time object detection
 # Author: Quan Gan
 
-import torch
+
 from matplotlib import pyplot as plt
 import numpy as np
 import cv2
 
-class Simple_model:
+class Obj_detect:
     '''This is a simple yolov5 class
 
     This class will run basic yolov5s model to detect image 
     or video
 
+    Args:
+        model: a pretrained yolo model
 
     '''
-    def __init__(self, model: str ='yolov5s'):
-        self._yolo_model = torch.hub.load('ultralytics/yolov5', model)
+    def __init__(self, model):
+        self._yolo_model = model
     
     def detect_img(self, img: str) -> None:
         """This function detects a image
