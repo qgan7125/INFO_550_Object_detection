@@ -30,7 +30,7 @@ Please review the [PyTorch Website](https://pytorch.org/) to find the best versi
 My setup for Mac and Windows
 ```
 # For windows
-pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio===0.8.1 -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+pip3 install torch torchvision torchaudio
 
 # For Mac
 pip3 install torch torchvision torchaudio
@@ -38,6 +38,9 @@ pip3 install torch torchvision torchaudio
 
 ## Train Custom Data 
 [yolov tutorial](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data)
+```
+python train.py --img 416 --batch 16 --epochs 100 --data data.yaml --weights yolov5s.pt    
+```
 
 
 ## Jupyter Notebook or Python Program
