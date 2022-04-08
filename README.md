@@ -39,6 +39,8 @@ pip3 install torch torchvision torchaudio
 ## Train Custom Data 
 [yolov tutorial](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data)
 ```
+# inside the yolov5 folder to train model
+cd yolov5
 python train.py --img 640 --batch 16 --epochs 200 --data data_pokemon.yaml --weights yolov5s.pt    
 ```
 
