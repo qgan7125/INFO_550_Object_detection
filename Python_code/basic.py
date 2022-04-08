@@ -34,7 +34,7 @@ class Obj_detect:
         filename = img.split("/")[-1].split(".")[0]
         plt.savefig(f'result/{filename}_result.png')
     
-    def detect_video(self, video=0) -> None:
+    def detect_video(self, video) -> None:
         """This function detects a video
 
         Args:
@@ -44,7 +44,6 @@ class Obj_detect:
         Press q to stop
         """
         cap = cv2.VideoCapture(video)
-
         print("Press q to stop the real time detection")
 
         while cap.isOpened():

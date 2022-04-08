@@ -36,7 +36,11 @@ pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio===0.8.1 -f ht
 pip3 install torch torchvision torchaudio
 ```
 
-### Jupyter Notebook or Python Program
+## Train Custom Data 
+[yolov tutorial](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data)
+
+
+## Jupyter Notebook or Python Program
 This project provide Jupyter Notebook version and Python version
 
 If you want to use Jupyter Notebook, Please install Jupyter in your virtual environment

@@ -9,10 +9,25 @@ import torch
 # -------------------------------------------------------------------------------
 # Run object detection
 # -------------------------------------------------------------------------------
-def simple_model():
+def simple_model(type=True, file=""):
+    """Using basic yolo to detect
+
+    Args:
+        type: a boolean to indicate what type file to detect
+            True as video detection, False as image detection
+        file: a string to represent file source, 
+             default 0 as camera
+    """
     yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
     model = basic.Obj_detect(yolo_model)
-    model.detect_video(0)
+
+    if type:
+        if not file:
+            model.detect_video(0)
+        else:
+            model.detect_video(file)
+    else:
+        model.detect_img(file)
 
 
 # -------------------------------------------------------------------------------
@@ -29,16 +44,21 @@ def read_command(argv):
     usage_str = """
     USAGE:      Python main.py <options>
     Examples:   (1) python main.py
-                    - starts simple object detection
-                (2) python main.py -t or python main.py --srt
-                    - starts a real time simple object detection
+                    - starts simple object detection with camera
+                (2) python main.py -f filename
+                    - starts simple object detection on video source
+                    - ex python main.py -f car_traffic.mp4
+                (3) python main.py -i -f filename or python main.py --img -file filename
+                    - to indicate if the file source is image
+                    - must with -f command to specify the file source
+                    - python main.py -i -f https://ultralytics.com/images/zidane.jpg
     """
     parser = OptionParser(usage_str)
 
-    parser.add_option('-t', '--srt', action='store_true', dest='simple_case', default=False,
-                    help=default("Start a simple model object detection"))
+    parser.add_option('-i', '--img', action='store_true', dest='image', default=False,
+                help=default("Indicate the source file type as image"))
 
-    parser.add_option('-f', '--file', dest='file', default=False,
+    parser.add_option('-f', '--file', dest='file',
                     help=default("File location or link"))
 
     options, other_junk = parser.parse_args(argv)
@@ -49,14 +69,14 @@ def read_command(argv):
     return options
 
 def run_command(options):
-    if options.simple_case:
-        pass
+    if not options.file:
+        simple_model()
     else:
-        print(options.file == False)
-        if not options.file:
-            simple_model(None)
+        if options.image:
+            simple_model(False, options.file)
         else:
-            simple_model(options.file)
+            simple_model(True, options.file)
+
 
 if __name__ == '__main__':
     """
