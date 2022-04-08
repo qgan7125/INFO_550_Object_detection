@@ -27,7 +27,7 @@ Please review the [PyTorch Website](https://pytorch.org/) to find the best versi
 
 (Note: If you have GPU, download GPU version which will train your model quicker)
 
-My setup for Mac and Windows
+My setup for Mac and Windows. There is a new version Pytorch released so some old version could be installed by pip.
 ```
 # For windows
 pip3 install torch torchvision torchaudio
