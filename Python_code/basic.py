@@ -32,7 +32,7 @@ class Obj_detect:
         results = self._yolo_model(img)
         results.print()
         plt.imshow(np.squeeze(results.render()))
-        filename = os.path.basename(img).split('.')[0]
+        filename = ".".join(os.path.basename(img).split('.')[:-1])
         plt.savefig(f'result/{filename}_result.png')
     
     def detect_video(self, video) -> None:
