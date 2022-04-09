@@ -6,6 +6,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 import cv2
+import os
 
 class Obj_detect:
     '''This is a simple yolov5 class
@@ -31,7 +32,7 @@ class Obj_detect:
         results = self._yolo_model(img)
         results.print()
         plt.imshow(np.squeeze(results.render()))
-        filename = img.split("/")[-1].split(".")[0]
+        filename = os.path.basename(img).split('.')[0]
         plt.savefig(f'result/{filename}_result.png')
     
     def detect_video(self, video) -> None:

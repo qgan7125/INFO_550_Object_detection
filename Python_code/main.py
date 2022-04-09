@@ -1,33 +1,61 @@
 # This file is the main file to run yolo class
 # Author: Quan Gan
 
+from ast import arg
+from operator import mod
 import basic 
 import os
 import sys
 import torch
 
 # -------------------------------------------------------------------------------
+# Helper
+# -------------------------------------------------------------------------------
+def filenames(path):
+    """Read all file names in the folder and return full path
+
+    Args:
+        path: a str of the test folder
+    
+    return a list of file paths
+    """
+    files = os.listdir(path)
+    return None
+
+# -------------------------------------------------------------------------------
 # Run object detection
 # -------------------------------------------------------------------------------
-def simple_model(type=True, file=""):
+def yield_result(pretained_model, **arguments):
     """Using basic yolo to detect
 
     Args:
-        type: a boolean to indicate what type file to detect
-            True as video detection, False as image detection
-        file: a string to represent file source, 
-             default 0 as camera
+        arguments: a unknown dictionary
     """
-    yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-    model = basic.Obj_detect(yolo_model)
 
-    if type:
-        if not file:
-            model.detect_video(0)
+    model = basic.Obj_detect(pretained_model)
+
+    # for multiple detect
+    if arguments['path']:
+        files = os.listdir(arguments['path'])
+        if arguments['image']:
+            for file in files:
+                model.detect_img(os.path.join(arguments['path'], file))
         else:
-            model.detect_video(file)
+            if not arguments['file']:
+                model.detect_video(0)
+            else:
+                for file in files:
+                    model.detect_video(os.path.join(arguments['path'], file))
+    # for single file
     else:
-        model.detect_img(file)
+        if arguments['image']:
+            model.detect_img(arguments['file'])
+        else:
+            if not arguments['file']:
+                model.detect_video(0)
+            else:
+                model.detect_video(arguments['file'])
+
 
 
 # -------------------------------------------------------------------------------
@@ -57,9 +85,15 @@ def read_command(argv):
 
     parser.add_option('-i', '--img', action='store_true', dest='image', default=False,
                 help=default("Indicate the source file type as image"))
+    
+    parser.add_option('-c', '--custom', dest='custom_model',
+                help=default("The path of custom_model"))
 
     parser.add_option('-f', '--file', dest='file',
-                    help=default("File location or link"))
+                    help=default("Test file location or link"))
+    
+    parser.add_option('-p', '--path', dest='path',
+                help=default("Test folder location"))
 
     options, other_junk = parser.parse_args(argv)
     
@@ -69,13 +103,23 @@ def read_command(argv):
     return options
 
 def run_command(options):
-    if not options.file:
-        simple_model()
+    if options.file and options.path:
+        print("Error: Multiple sources", file=sys.stderr)
+
+    model = None
+    print(options)
+    if options.custom_model:
+        # train the custom model
+        model = torch.hub.load('ultralytics/yolov5', 'custom', path=options.custom_model, force_reload=True)
     else:
-        if options.image:
-            simple_model(False, options.file)
-        else:
-            simple_model(True, options.file)
+        # train the basic model
+        model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+
+    yield_result(model, 
+                image = options.image, 
+                custom_model = options.custom_model,
+                file = options.file,
+                path = options.path)
 
 
 if __name__ == '__main__':

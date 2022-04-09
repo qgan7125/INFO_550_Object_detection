@@ -2,6 +2,9 @@
 
 ## Setup
 Please install required dependencies and git repos
+```
+Python >= 3.7
+```
 
 ### Setup Virtual Environment
 ```
