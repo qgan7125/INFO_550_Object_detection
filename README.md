@@ -1,4 +1,4 @@
-# INFO 550 Final Project A
+# Object detection by using yolov5 model
 
 ## Setup
 Please install required dependencies and git repos
