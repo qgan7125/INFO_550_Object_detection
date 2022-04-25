@@ -57,6 +57,9 @@ pip install ipykernel
 python -m ipykernel install --user --name=ODenv
 ```
 
+## Report
+INFO550_final_project.pdf is the report for this project.
+
 
 ## Reference
 This project learnt from [Deep Drowsiness Detection using YOLO, Pytorch and Python](https://www.youtube.com/watch?v=tFNJGim3FXw) and [Git repo](https://github.com/nicknochnack/YOLO-Drowsiness-Detection)
